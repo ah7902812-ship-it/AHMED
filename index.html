@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spreadify — توزيع المحتوى الرقمي الاحترافي</title>
+<meta name="description" content="نساعد المحتوى الخاص بك يصل لأكبر عدد ممكن من الجمهور الحقيقي عبر توزيع احترافي على جميع المنصات.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #9A7630;
+    --black: #080808;
+    --black-2: #111111;
+    --black-3: #1A1A1A;
+    --black-4: #242424;
+    --gray: #555555;
+    --gray-light: #888888;
+    --white: #F8F5EE;
+    --white-dim: #C8C0B0;
+    --radius: 4px;
+    --radius-lg: 8px;
+    --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ========== NAVBAR ========== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 72px;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    transition: var(--transition);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--white); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 10px 24px;
+    border-radius: var(--radius);
+    font-weight: 700 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px;
+    background: none; border: none;
+  }
+  .nav-hamburger span {
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: var(--transition);
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 72px; left: 0; right: 0;
+    background: var(--black-2);
+    padding: 24px 5%;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    z-index: 999;
+    flex-direction: column; gap: 20px;
+  }
+  .mobile-menu a {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .mobile-menu.active { display: flex; }
+
+  /* ========== HERO ========== */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    padding: 120px 5% 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 80%);
+  }
+
+  .hero-content {
+    max-width: 900px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    animation: heroIn 1s ease both;
+  }
+
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--gold-light);
+    margin-bottom: 32px;
+    letter-spacing: 1px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-title {
+    font-size: clamp(42px, 6vw, 88px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+  }
+
+  .hero-title .highlight {
+    color: var(--gold);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-title .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--white-dim);
+    line-height: 1.8;
+    max-width: 680px;
+    margin: 0 auto 48px;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 64px;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    padding: 16px 40px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Cairo', sans-serif;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 40px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Cairo', sans-serif;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    display: flex; justify-content: center; gap: 64px; flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    text-align: center;
+    animation: heroIn 1s ease both;
+  }
+  .hero-stat:nth-child(2) { animation-delay: 0.1s; }
+  .hero-stat:nth-child(3) { animation-delay: 0.2s; }
+
+  .stat-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--gray-light);
+    letter-spacing: 1px;
+  }
+
+  /* ========== SECTIONS ========== */
+  section { padding: 100px 5%; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--white-dim);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  .divider {
+    width: 60px; height: 3px;
+    background: var(--gold);
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ========== PLATFORMS ========== */
+  #platforms {
+    background: var(--black-2);
+    padding: 40px 5%;
+    overflow: hidden;
+  }
+
+  .platforms-label {
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .platforms-track {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    animation: scroll 20s linear infinite;
+    width: max-content;
+  }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .platform-item {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .platform-item:hover { color: var(--gold); }
+
+  .platform-dot {
+    width: 4px; height: 4px;
+    background: var(--gold-dark);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ========== SERVICES ========== */
+  #services { background: var(--black); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--black-2);
+    padding: 40px 36px;
+    border: 1px solid rgba(201,168,76,0.05);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover { background: var(--black-3); }
+  .service-card:hover::before { transform: scaleX(1); transform-origin: left; }
+
+  .service-icon {
+    width: 52px; height: 52px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+
+  .service-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    color: var(--white-dim);
+    line-height: 1.8;
+  }
+
+  /* ========== RESULTS ========== */
+  #results { background: var(--black-2); }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 80px;
+  }
+
+  .result-card {
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .result-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+  .result-card:hover::after { opacity: 1; }
+
+  .result-num {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .result-label {
+    font-size: 14px;
+    color: var(--white-dim);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    transition: all 0.3s;
+  }
+
+  .testimonial-card:hover { border-color: rgba(201,168,76,0.2); }
+
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 16px;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--white-dim);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .author-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--gold);
+  }
+
+  .author-name { font-weight: 700; font-size: 14px; }
+  .author-role { font-size: 12px; color: var(--gray-light); margin-top: 2px; }
+
+  /* ========== PRICING ========== */
+  #pricing { background: var(--black); }
+
+  .pricing-toggle {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .toggle-label { font-size: 14px; color: var(--white-dim); }
+
+  .toggle-switch {
+    width: 52px; height: 28px;
+    background: var(--black-4);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 100px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .toggle-switch.active { background: var(--gold); }
+
+  .toggle-knob {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+
+  .toggle-switch.active .toggle-knob { transform: translateX(24px); }
+
+  .save-badge {
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto 64px;
+  }
+
+  .pricing-card {
+    background: var(--black-2);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .pricing-card.featured {
+    border-color: var(--gold);
+    background: var(--black-3);
+  }
+
+  .pricing-card:hover { transform: translateY(-4px); }
+
+  .popular-badge {
+    position: absolute;
+    top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .pricing-name {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .pricing-price {
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .pricing-price sup {
+    font-size: 24px;
+    vertical-align: super;
+  }
+
+  .pricing-period {
+    font-size: 13px;
+    color: var(--gray-light);
+    margin-bottom: 32px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .pricing-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px;
+    color: var(--white-dim);
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: var(--gold);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .pricing-features li.disabled { opacity: 0.4; }
+  .pricing-features li.disabled::before { content: '✗'; color: var(--gray); }
+
+  /* ========== CUSTOM QUOTE CALCULATOR ========== */
+  #calculator { background: var(--black-2); }
+
+  .calc-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+  }
+
+  .calc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+
+  .calc-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .calc-select, .calc-input {
+    width: 100%;
+    background: var(--black-4);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius);
+    color: var(--white);
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .calc-select:focus, .calc-input:focus { border-color: var(--gold); }
+
+  .calc-platforms {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .platform-chip {
+    background: var(--black-4);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--white-dim);
+    font-family: 'Cairo', sans-serif;
+  }
+
+  .platform-chip.selected {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .calc-result {
+    background: var(--black);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .calc-price-label { font-size: 13px; color: var(--gray-light); margin-bottom: 8px; }
+  .calc-price { font-size: 56px; font-weight: 900; color: var(--gold); }
+  .calc-price-note { font-size: 12px; color: var(--gray-light); margin-top: 8px; }
+  .calc-min-note {
+    font-size: 13px;
+    color: rgba(201,168,76,0.6);
+    margin-top: 16px;
+    padding: 10px 16px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius);
+    display: inline-block;
+  }
+
+  /* ========== PROCESS ========== */
+  #process { background: var(--black); }
+
+  .process-steps {
+    display: flex;
+    gap: 0;
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 32px; left: 32px; right: 32px; height: 1px;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  }
+
+  .process-step {
+    flex: 1;
+    text-align: center;
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .step-num {
+    width: 64px; height: 64px;
+    background: var(--black-2);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--gold);
+    margin: 0 auto 24px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+  }
+
+  .process-step:hover .step-num {
+    background: var(--gold);
+    color: var(--black);
+    transform: scale(1.1);
+  }
+
+  .step-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.7;
+  }
+
+  /* ========== CTA ========== */
+  #cta {
+    background: var(--black-2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 900;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  /* ========== ORDER FORM ========== */
+  #order { background: var(--black); }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .form-control {
+    background: var(--black-2);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius);
+    color: var(--white);
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-control:focus { border-color: var(--gold); }
+
+  textarea.form-control { resize: vertical; min-height: 120px; }
+
+  .form-submit {
+    grid-column: 1 / -1;
+    margin-top: 16px;
+  }
+
+  .form-success {
+    display: none;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    text-align: center;
+  }
+
+  .form-success.show { display: block; }
+
+  /* ========== BLOG ========== */
+  #blog { background: var(--black-2); }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .blog-card {
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .blog-card:hover { border-color: rgba(201,168,76,0.2); transform: translateY(-4px); }
+
+  .blog-thumb {
+    height: 180px;
+    background: var(--black-4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
+  }
+
+  .blog-tag {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: rgba(201,168,76,0.9);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 100px;
+    letter-spacing: 1px;
+    z-index: 1;
+  }
+
+  .blog-body { padding: 24px; }
+
+  .blog-date { font-size: 12px; color: var(--gray-light); margin-bottom: 10px; }
+
+  .blog-title { font-size: 17px; font-weight: 700; margin-bottom: 10px; line-height: 1.5; }
+
+  .blog-excerpt { font-size: 13px; color: var(--white-dim); line-height: 1.7; }
+
+  .blog-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 16px;
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .blog-link:hover { gap: 10px; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: var(--black-2);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 64px 5% 32px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand .nav-logo { display: block; margin-bottom: 16px; }
+  .footer-desc { font-size: 14px; color: var(--white-dim); line-height: 1.8; max-width: 280px; }
+
+  .footer-socials {
+    display: flex; gap: 12px; margin-top: 20px;
+  }
+
+  .social-btn {
+    width: 36px; height: 36px;
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.2s;
+    color: var(--white-dim);
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.1); }
+
+  .footer-col h4 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-col a {
+    font-size: 14px;
+    color: var(--white-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  .footer-copy { font-size: 13px; color: var(--gray); }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a { font-size: 13px; color: var(--gray); text-decoration: none; }
+  .footer-legal a:hover { color: var(--gold); }
+
+  /* ========== WHATSAPP FLOAT ========== */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 32px;
+    left: 32px;
+    width: 56px; height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    z-index: 998;
+    transition: all 0.2s;
+    animation: float 3s ease-in-out infinite;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* ========== SCROLL TO TOP ========== */
+  .scroll-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px; height: 44px;
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--gold);
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 998;
+  }
+  .scroll-top.visible { opacity: 1; }
+  .scroll-top:hover { background: var(--gold); color: var(--black); }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+
+    .hero-stats { gap: 32px; }
+
+    .calc-row { grid-template-columns: 1fr; }
+
+    .process-steps { flex-direction: column; gap: 32px; }
+    .process-steps::before { display: none; }
+
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: 1 / -1; }
+
+    section { padding: 64px 5%; }
+
+    .calc-wrapper { padding: 28px 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ========== ANIMATIONS ========== */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* Dashboard preview */
+  .dashboard-preview {
+    max-width: 900px;
+    margin: 64px auto 0;
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .dashboard-bar {
+    background: var(--black-4);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .db-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .db-red { background: #FF5F57; }
+  .db-yellow { background: #FFBD2E; }
+  .db-green { background: #28CA41; }
+
+  .db-url {
+    flex: 1; margin: 0 12px;
+    background: var(--black-3);
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--gray-light);
+    text-align: center;
+  }
+
+  .dashboard-body {
+    padding: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .db-stat {
+    background: var(--black-4);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .db-stat-num { font-size: 24px; font-weight: 900; color: var(--gold); }
+  .db-stat-label { font-size: 11px; color: var(--gray-light); margin-top: 4px; }
+
+  .db-chart-row {
+    grid-column: 1 / -1;
+    background: var(--black-4);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: var(--radius);
+    padding: 20px;
+    height: 120px;
+    display: flex; align-items: flex-end; gap: 8px;
+  }
+
+  .db-bar {
+    flex: 1;
+    background: rgba(201,168,76,0.3);
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s;
+    min-height: 8px;
+    position: relative;
+  }
+
+  .db-bar.active { background: var(--gold); }
+
+  @media (max-width: 600px) {
+    .dashboard-body { grid-template-columns: repeat(2, 1fr); }
+    .db-chart-row { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">SPREAD<span>IFY</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#results">النتائج</a></li>
+    <li><a href="#pricing">الأسعار</a></li>
+    <li><a href="#process">كيف نعمل</a></li>
+    <li><a href="#blog">المدونة</a></li>
+    <li><a href="#order" class="nav-cta">ابدأ الآن</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="القائمة">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMobile()">الخدمات</a>
+  <a href="#results" onclick="closeMobile()">النتائج</a>
+  <a href="#pricing" onclick="closeMobile()">الأسعار</a>
+  <a href="#process" onclick="closeMobile()">كيف نعمل</a>
+  <a href="#blog" onclick="closeMobile()">المدونة</a>
+  <a href="#order" class="nav-cta" style="padding:12px 24px;text-align:center;border-radius:4px;margin-top:8px;" onclick="closeMobile()">ابدأ الآن</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ التوزيع الرقمي الاحترافي</div>
+    <h1 class="hero-title">
+      محتواك يستحق<br>
+      <span class="highlight">انتشاراً حقيقياً</span>
+    </h1>
+    <p class="hero-sub">
+      نساعد المحتوى الخاص بك يصل لأكبر عدد ممكن من الجمهور الحقيقي
+      عبر توزيع احترافي على جميع المنصات — يوتيوب، تيك توك، إنستغرام، وأكثر.
+    </p>
+    <div class="hero-actions">
+      <a href="#order" class="btn-primary">ابدأ الانتشار الآن ←</a>
+      <a href="#results" class="btn-outline">▶ شوف النتائج</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="stat-num" data-count="150">0</span>
+        <span class="stat-label">مليون مشاهدة</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num" data-count="500">0</span>
+        <span class="stat-label">عميل راضٍ</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num" data-count="12">0</span>
+        <span class="stat-label">منصة مدعومة</span>
+      </div>
+    </div>
+
+    <!-- Dashboard Preview -->
+    <div class="dashboard-preview fade-up">
+      <div class="dashboard-bar">
+        <div class="db-dot db-red"></div>
+        <div class="db-dot db-yellow"></div>
+        <div class="db-dot db-green"></div>
+        <div class="db-url">spreadify.com/dashboard</div>
+      </div>
+      <div class="dashboard-body">
+        <div class="db-stat"><div class="db-stat-num">2.4M</div><div class="db-stat-label">المشاهدات</div></div>
+        <div class="db-stat"><div class="db-stat-num">+187%</div><div class="db-stat-label">نمو الوصول</div></div>
+        <div class="db-stat"><div class="db-stat-num">94%</div><div class="db-stat-label">رضا العملاء</div></div>
+        <div class="db-stat"><div class="db-stat-num">12</div><div class="db-stat-label">منصة نشطة</div></div>
+        <div class="db-chart-row" id="chartBars"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS MARQUEE -->
+<div id="platforms">
+  <p class="platforms-label">نوزع على جميع المنصات الكبرى</p>
+  <div style="overflow:hidden">
+    <div class="platforms-track" id="platformsTrack">
+      <span class="platform-item">YouTube</span><span class="platform-dot"></span>
+      <span class="platform-item">TikTok</span><span class="platform-dot"></span>
+      <span class="platform-item">Instagram</span><span class="platform-dot"></span>
+      <span class="platform-item">Facebook</span><span class="platform-dot"></span>
+      <span class="platform-item">X / Twitter</span><span class="platform-dot"></span>
+      <span class="platform-item">LinkedIn</span><span class="platform-dot"></span>
+      <span class="platform-item">Spotify</span><span class="platform-dot"></span>
+      <span class="platform-item">Apple Podcasts</span><span class="platform-dot"></span>
+      <span class="platform-item">Snapchat</span><span class="platform-dot"></span>
+      <span class="platform-item">Pinterest</span><span class="platform-dot"></span>
+      <span class="platform-item">Threads</span><span class="platform-dot"></span>
+      <span class="platform-item">YouTube Shorts</span><span class="platform-dot"></span>
+      <!-- DUPLICATE FOR SEAMLESS LOOP -->
+      <span class="platform-item">YouTube</span><span class="platform-dot"></span>
+      <span class="platform-item">TikTok</span><span class="platform-dot"></span>
+      <span class="platform-item">Instagram</span><span class="platform-dot"></span>
+      <span class="platform-item">Facebook</span><span class="platform-dot"></span>
+      <span class="platform-item">X / Twitter</span><span class="platform-dot"></span>
+      <span class="platform-item">LinkedIn</span><span class="platform-dot"></span>
+      <span class="platform-item">Spotify</span><span class="platform-dot"></span>
+      <span class="platform-item">Apple Podcasts</span><span class="platform-dot"></span>
+      <span class="platform-item">Snapchat</span><span class="platform-dot"></span>
+      <span class="platform-item">Pinterest</span><span class="platform-dot"></span>
+      <span class="platform-item">Threads</span><span class="platform-dot"></span>
+      <span class="platform-item">YouTube Shorts</span><span class="platform-dot"></span>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header fade-up">
+    <span class="section-tag">خدماتنا</span>
+    <h2 class="section-title">كل ما تحتاجه للانتشار</h2>
+    <p class="section-sub">خدمات متكاملة لصناع المحتوى والبودكاست والبراندات والشركات</p>
+    <div class="divider"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-icon">📡</div>
+      <h3 class="service-title">توزيع المحتوى</h3>
+      <p class="service-desc">نوزع محتواك تلقائياً على جميع المنصات في نفس الوقت لضمان أقصى وصول ممكن.</p>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">🎙️</div>
+      <h3 class="service-title">توزيع البودكاست</h3>
+      <p class="service-desc">نشر بودكاستك على Spotify وApple Podcasts وجميع منصات الصوت العالمية.</p>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">🎬</div>
+      <h3 class="service-title">Shorts & Reels</h3>
+      <p class="service-desc">إنتاج وتوزيع الفيديوهات القصيرة لزيادة الوصول الأورغانيك بشكل ضخم.</p>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">📱</div>
+      <h3 class="service-title">إدارة ونشر المحتوى</h3>
+      <p class="service-desc">نتولى إدارة حساباتك الاجتماعية كاملاً بشكل احترافي ومنتظم.</p>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">♻️</div>
+      <h3 class="service-title">إعادة تدوير المحتوى</h3>
+      <p class="service-desc">نحول المحتوى القديم لمحتوى جديد ومتنوع يناسب كل منصة.</p>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">📅</div>
+      <h3 class="service-title">جدولة المحتوى</h3>
+      <p class="service-desc">جدولة ذكية بالوقت الأمثل للنشر بناء على تحليل جمهورك.</p>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">✍️</div>
+      <h3 class="service-title">كتابة الكابشن والعناوين</h3>
+      <p class="service-desc">كتابة احترافية بمساعدة الذكاء الاصطناعي لزيادة التفاعل والنقرات.</p>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">🔍</div>
+      <h3 class="service-title">SEO للمحتوى</h3>
+      <p class="service-desc">تحسين محتواك ليظهر في نتائج البحث ويصل لجمهور أوسع عضوياً.</p>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-icon">📊</div>
+      <h3 class="service-title">تحليل الأداء</h3>
+      <p class="service-desc">تقارير تفصيلية دقيقة توضح نمو حساباتك ومشاهداتك وتفاعل جمهورك.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="section-header fade-up">
+    <span class="section-tag">النتائج</span>
+    <h2 class="section-title">أرقام حقيقية، نمو حقيقي</h2>
+    <p class="section-sub">عملاؤنا يرون نتائج ملموسة خلال أسابيع قليلة</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="results-grid">
+    <div class="result-card fade-up">
+      <span class="result-num">150M+</span>
+      <span class="result-label">إجمالي المشاهدات</span>
+    </div>
+    <div class="result-card fade-up">
+      <span class="result-num">500+</span>
+      <span class="result-label">عميل راضٍ</span>
+    </div>
+    <div class="result-card fade-up">
+      <span class="result-num">340%</span>
+      <span class="result-label">متوسط نمو الوصول</span>
+    </div>
+    <div class="result-card fade-up">
+      <span class="result-num">48H</span>
+      <span class="result-label">وقت التنفيذ</span>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-up">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"خلال شهر واحد وصلنا لأكثر من ٢ مليون مشاهدة على يوتيوب. Spreadify غيّرت كل شيء بالنسبة لنا!"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">أح</div>
+        <div>
+          <div class="author-name">أحمد حسين</div>
+          <div class="author-role">صانع محتوى — يوتيوب</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"بودكاستنا وصل لـ 50 منصة في نفس الوقت! الاحترافية والسرعة في التنفيذ شيء مش طبيعي."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">سم</div>
+        <div>
+          <div class="author-name">سارة محمد</div>
+          <div class="author-role">صانعة بودكاست</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"شركتنا حققت زيادة ٤٠٠٪ في التفاعل خلال ٩٠ يوم. استثمار ممتاز جداً."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">خع</div>
+        <div>
+          <div class="author-name">خالد العتيبي</div>
+          <div class="author-role">مدير تسويق — شركة خليجية</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-header fade-up">
+    <span class="section-tag">الأسعار</span>
+    <h2 class="section-title">باقات واضحة وشفافة</h2>
+    <p class="section-sub">لا رسوم خفية. الأسعار تبدأ من $450 فقط.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="pricing-toggle">
+    <span class="toggle-label">شهري</span>
+    <div class="toggle-switch" id="pricingToggle" onclick="togglePricing()">
+      <div class="toggle-knob"></div>
+    </div>
+    <span class="toggle-label">سنوي</span>
+    <span class="save-badge">وفّر 20%</span>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="pricing-card fade-up">
+      <div class="pricing-name">Starter</div>
+      <div class="pricing-price"><sup>$</sup><span class="price-val">450</span></div>
+      <div class="pricing-period">/ شهرياً — 5 فيديوهات</div>
+      <ul class="pricing-features">
+        <li>5 فيديوهات شهرياً</li>
+        <li>3 منصات اجتماعية</li>
+        <li>جدولة المحتوى</li>
+        <li>تقرير شهري</li>
+        <li>دعم عبر واتساب</li>
+        <li class="disabled">إدارة الأكونت</li>
+        <li class="disabled">SEO متقدم</li>
+        <li class="disabled">مدير حساب مخصص</li>
+      </ul>
+      <a href="#order" class="btn-outline" style="width:100%;justify-content:center">ابدأ الآن</a>
+    </div>
+
+    <div class="pricing-card featured fade-up">
+      <div class="popular-badge">الأكثر طلباً</div>
+      <div class="pricing-name">Pro</div>
+      <div class="pricing-price"><sup>$</sup><span class="price-val">900</span></div>
+      <div class="pricing-period">/ شهرياً — 15 فيديو</div>
+      <ul class="pricing-features">
+        <li>15 فيديو شهرياً</li>
+        <li>جميع المنصات (12)</li>
+        <li>جدولة + تحليل أداء</li>
+        <li>كتابة الكابشن</li>
+        <li>إعادة تدوير المحتوى</li>
+        <li>SEO متقدم</li>
+        <li>تقارير أسبوعية</li>
+        <li class="disabled">مدير حساب مخصص</li>
+      </ul>
+      <a href="#order" class="btn-primary" style="width:100%;justify-content:center">ابدأ الآن</a>
+    </div>
+
+    <div class="pricing-card fade-up">
+      <div class="pricing-name">Enterprise</div>
+      <div class="pricing-price"><sup>$</sup><span class="price-val">1800</span></div>
+      <div class="pricing-period">/ شهرياً — غير محدود</div>
+      <ul class="pricing-features">
+        <li>محتوى غير محدود</li>
+        <li>جميع المنصات</li>
+        <li>مدير حساب مخصص</li>
+        <li>تقارير يومية</li>
+        <li>استراتيجية محتوى كاملة</li>
+        <li>SEO + بودكاست</li>
+        <li>AI لتحسين المحتوى</li>
+        <li>دعم أولوية 24/7</li>
+      </ul>
+      <a href="#order" class="btn-outline" style="width:100%;justify-content:center">تواصل معنا</a>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calculator">
+  <div class="section-header fade-up">
+    <span class="section-tag">احسب سعرك</span>
+    <h2 class="section-title">نظام التسعير الذكي</h2>
+    <p class="section-sub">اختر احتياجاتك واعرف السعر فوراً — الحد الأدنى $450</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="calc-wrapper fade-up">
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>عدد الفيديوهات شهرياً</label>
+        <select class="calc-select" id="calcVideos" onchange="calcPrice()">
+          <option value="5">5 فيديوهات</option>
+          <option value="10">10 فيديوهات</option>
+          <option value="15" selected>15 فيديو</option>
+          <option value="20">20 فيديو</option>
+          <option value="30">30 فيديو</option>
+          <option value="999">غير محدود</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>عدد الأكونتات</label>
+        <select class="calc-select" id="calcAccounts" onchange="calcPrice()">
+          <option value="1">حساب واحد</option>
+          <option value="2" selected>2-3 حسابات</option>
+          <option value="3">4-6 حسابات</option>
+          <option value="5">+7 حسابات</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-field" style="margin-bottom:24px">
+      <label>المنصات المطلوبة</label>
+    </div>
+    <div class="calc-platforms" id="calcPlatforms">
+      <button class="platform-chip selected" onclick="toggleChip(this)" data-val="1">YouTube</button>
+      <button class="platform-chip selected" onclick="toggleChip(this)" data-val="1">TikTok</button>
+      <button class="platform-chip selected" onclick="toggleChip(this)" data-val="1">Instagram</button>
+      <button class="platform-chip" onclick="toggleChip(this)" data-val="1">Facebook</button>
+      <button class="platform-chip" onclick="toggleChip(this)" data-val="1">X / Twitter</button>
+      <button class="platform-chip" onclick="toggleChip(this)" data-val="1">LinkedIn</button>
+      <button class="platform-chip" onclick="toggleChip(this)" data-val="1">Snapchat</button>
+      <button class="platform-chip" onclick="toggleChip(this)" data-val="1">Spotify</button>
+      <button class="platform-chip" onclick="toggleChip(this)" data-val="1">Apple Podcasts</button>
+      <button class="platform-chip" onclick="toggleChip(this)" data-val="1">Pinterest</button>
+    </div>
+
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>مدة الخدمة</label>
+        <select class="calc-select" id="calcDuration" onchange="calcPrice()">
+          <option value="1">شهر واحد</option>
+          <option value="3" selected>3 أشهر</option>
+          <option value="6">6 أشهر</option>
+          <option value="12">سنة كاملة</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>خدمات إضافية</label>
+        <select class="calc-select" id="calcExtra" onchange="calcPrice()">
+          <option value="0">لا يوجد</option>
+          <option value="150">كتابة الكابشن (+$150)</option>
+          <option value="250">SEO متقدم (+$250)</option>
+          <option value="350">إدارة كاملة (+$350)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-result">
+      <div class="calc-price-label">السعر الشهري المقدر</div>
+      <div class="calc-price">$<span id="calcResult">675</span></div>
+      <div class="calc-price-note">شامل جميع الخيارات المختارة</div>
+      <div class="calc-min-note">⚡ الحد الأدنى للخدمة $450 شهرياً</div>
+      <br><br>
+      <a href="#order" class="btn-primary">اطلب الخدمة الآن ←</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-header fade-up">
+    <span class="section-tag">كيف نعمل</span>
+    <h2 class="section-title">من الطلب للنتائج في 4 خطوات</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="process-steps">
+    <div class="process-step fade-up">
+      <div class="step-num">١</div>
+      <h3 class="step-title">اختر الباقة</h3>
+      <p class="step-desc">اختر الباقة المناسبة أو احسب سعرك المخصص عبر النظام الذكي</p>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num">٢</div>
+      <h3 class="step-title">التواصل والتخطيط</h3>
+      <p class="step-desc">نتواصل معك خلال 24 ساعة لوضع استراتيجية مخصصة لمحتواك</p>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num">٣</div>
+      <h3 class="step-title">التنفيذ الاحترافي</h3>
+      <p class="step-desc">فريقنا يبدأ التوزيع فوراً بأعلى مستوى من الاحترافية</p>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num">٤</div>
+      <h3 class="step-title">النتائج والتقارير</h3>
+      <p class="step-desc">تلقى تقارير دورية تفصيلية بالأرقام والمشاهدات والنمو</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div style="position:relative;z-index:2">
+    <p class="section-tag" style="display:block;text-align:center;margin-bottom:16px">ابدأ اليوم</p>
+    <h2 class="cta-title">جاهز تبدأ الانتشار؟</h2>
+    <p style="font-size:18px;color:var(--white-dim);margin-bottom:40px;line-height:1.8">
+      انضم لـ +500 عميل يثقون بـ Spreadify لتنمية محتواهم عالمياً
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="#order" class="btn-primary" style="font-size:18px;padding:20px 52px">ابدأ الآن ←</a>
+      <a href="#calculator" class="btn-outline" style="font-size:18px;padding:20px 52px">احسب سعرك</a>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section id="order">
+  <div class="section-header fade-up">
+    <span class="section-tag">اطلب الخدمة</span>
+    <h2 class="section-title">ابدأ رحلة الانتشار</h2>
+    <p class="section-sub">أرسل لنا تفاصيل طلبك وسنتواصل معك خلال 24 ساعة</p>
+    <div class="divider"></div>
+  </div>
+
+  <div id="orderForm" class="form-grid fade-up">
+    <div class="form-group">
+      <label>الاسم الكريم</label>
+      <input type="text" class="form-control" placeholder="محمد أحمد" id="fname">
+    </div>
+    <div class="form-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" class="form-control" placeholder="example@email.com" id="femail">
+    </div>
+    <div class="form-group">
+      <label>رقم الواتساب</label>
+      <input type="tel" class="form-control" placeholder="+966 5XX XXX XXX" id="fphone">
+    </div>
+    <div class="form-group">
+      <label>نوع الخدمة</label>
+      <select class="form-control" id="fservice">
+        <option value="">اختر الخدمة</option>
+        <option>توزيع المحتوى</option>
+        <option>توزيع البودكاست</option>
+        <option>Shorts & Reels</option>
+        <option>إدارة ونشر المحتوى</option>
+        <option>باقة متكاملة</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>الباقة المطلوبة</label>
+      <select class="form-control" id="fpackage">
+        <option value="">اختر الباقة</option>
+        <option>Starter — $450/شهر</option>
+        <option>Pro — $900/شهر</option>
+        <option>Enterprise — $1800/شهر</option>
+        <option>مخصصة — بناءً على الحاسبة</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>طريقة التواصل المفضلة</label>
+      <select class="form-control" id="fcontact">
+        <option>واتساب</option>
+        <option>بريد إلكتروني</option>
+        <option>مكالمة هاتفية</option>
+      </select>
+    </div>
+    <div class="form-group full">
+      <label>تفاصيل إضافية</label>
+      <textarea class="form-control" placeholder="اكتب لنا أي تفاصيل إضافية عن محتواك وأهدافك..." id="fmessage"></textarea>
+    </div>
+    <div class="form-submit">
+      <button class="btn-primary" onclick="submitOrder()" style="width:100%;justify-content:center;padding:18px">
+        إرسال الطلب ←
+      </button>
+      <p style="font-size:12px;color:var(--gray-light);text-align:center;margin-top:16px">
+        🔒 بياناتك آمنة 100% ومحمية بالكامل. لن يتم مشاركتها مع أي جهة.
+      </p>
+    </div>
+  </div>
+
+  <div class="form-success fade-up" id="formSuccess" style="max-width:800px;margin:0 auto">
+    <div style="font-size:64px;margin-bottom:24px">✅</div>
+    <h3 style="font-size:24px;margin-bottom:16px;color:var(--gold)">تم إرسال طلبك بنجاح!</h3>
+    <p style="color:var(--white-dim);font-size:16px;line-height:1.8">
+      شكراً لثقتك في Spreadify! سيتواصل معك فريقنا خلال 24 ساعة عبر الوسيلة التي اخترتها.
+    </p>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-header fade-up">
+    <span class="section-tag">المدونة</span>
+    <h2 class="section-title">أسرار الانتشار الرقمي</h2>
+    <p class="section-sub">نشاركك أفضل استراتيجيات المحتوى مجاناً</p>
+    <div class="divider"></div>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card fade-up" onclick="window.scrollTo(0,0)">
+      <div class="blog-thumb">
+        🎙️
+        <span class="blog-tag">بودكاست</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-date">15 يناير 2025</div>
+        <h3 class="blog-title">كيف تنشر بودكاستك على 50 منصة في وقت واحد؟</h3>
+        <p class="blog-excerpt">دليل شامل لتوزيع البودكاست احترافياً وزيادة عدد المستمعين بطريقة ذكية...</p>
+        <a href="#" class="blog-link">اقرأ المقال →</a>
+      </div>
+    </div>
+    <div class="blog-card fade-up" onclick="window.scrollTo(0,0)">
+      <div class="blog-thumb">
+        🚀
+        <span class="blog-tag">انتشار</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-date">10 يناير 2025</div>
+        <h3 class="blog-title">أسرار جعل المحتوى Viral في 2025</h3>
+        <p class="blog-excerpt">الخوارزميات تغيّرت كثيراً. إليك ما يجب أن تعرفه لتحقيق الانتشار الحقيقي...</p>
+        <a href="#" class="blog-link">اقرأ المقال →</a>
+      </div>
+    </div>
+    <div class="blog-card fade-up" onclick="window.scrollTo(0,0)">
+      <div class="blog-thumb">
+        ⏰
+        <span class="blog-tag">نشر</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-date">5 يناير 2025</div>
+        <h3 class="blog-title">أفضل أوقات النشر على كل منصة في 2025</h3>
+        <p class="blog-excerpt">توقيت النشر يؤثر بشكل ضخم على الوصول والتفاعل. إليك أفضل الأوقات لكل منصة...</p>
+        <a href="#" class="blog-link">اقرأ المقال →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">SPREAD<span>IFY</span></a>
+      <p class="footer-desc">شركة متخصصة في توزيع المحتوى الرقمي الاحترافي على جميع المنصات. نساعدك تنتشر وتنمو.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">▶</a>
+        <a href="#" class="social-btn">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>الخدمات</h4>
+      <ul>
+        <li><a href="#services">توزيع المحتوى</a></li>
+        <li><a href="#services">توزيع البودكاست</a></li>
+        <li><a href="#services">Shorts & Reels</a></li>
+        <li><a href="#services">SEO المحتوى</a></li>
+        <li><a href="#services">تحليل الأداء</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>الشركة</h4>
+      <ul>
+        <li><a href="#results">من نحن</a></li>
+        <li><a href="#results">نتائجنا</a></li>
+        <li><a href="#blog">المدونة</a></li>
+        <li><a href="#process">كيف نعمل</a></li>
+        <li><a href="#order">تواصل معنا</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>الدعم</h4>
+      <ul>
+        <li><a href="#">الأسئلة الشائعة</a></li>
+        <li><a href="#">سياسة الخصوصية</a></li>
+        <li><a href="#">الشروط والأحكام</a></li>
+        <li><a href="#">سياسة الاسترداد</a></li>
+        <li><a href="#order">طلب خدمة</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Spreadify. جميع الحقوق محفوظة.</p>
+    <div class="footer-legal">
+      <a href="#">سياسة الخصوصية</a>
+      <a href="#">الشروط والأحكام</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<a href="https://wa.me/966500000000" class="whatsapp-float" target="_blank" aria-label="واتساب">💬</a>
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="للأعلى">↑</button>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+/* ---- NAV ---- */
+const navbar = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+window.addEventListener('scroll', () => {
+  navbar.style.background = window.scrollY > 50 ? 'rgba(8,8,8,0.98)' : 'rgba(8,8,8,0.92)';
+  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+});
+
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('active');
+});
+
+function closeMobile() { mobileMenu.classList.remove('active'); }
+
+/* ---- COUNTER ANIMATION ---- */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.nextElementSibling.textContent.includes('مليون') ? '' : '';
+  let current = 0;
+  const step = target / 60;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) { el.textContent = target + '+'; clearInterval(timer); }
+    else { el.textContent = Math.floor(current); }
+  }, 25);
+}
+
+/* ---- SCROLL ANIMATIONS ---- */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const counter = entry.target.querySelector('[data-count]');
+      if (counter) animateCounter(counter);
+      const counters = entry.target.querySelectorAll ? [] : [];
+    }
+  });
+}, { threshold: 0.15 });
+
+// Animate individual counters when hero is visible
+const heroSection = document.getElementById('hero');
+const heroObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    document.querySelectorAll('[data-count]').forEach(animateCounter);
+    heroObserver.disconnect();
+  }
+}, { threshold: 0.5 });
+heroObserver.observe(heroSection);
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* ---- CHART BARS ---- */
+const chartData = [40, 55, 45, 70, 60, 85, 75, 90, 80, 95, 88, 100];
+const chartContainer = document.getElementById('chartBars');
+chartData.forEach((h, i) => {
+  const bar = document.createElement('div');
+  bar.className = 'db-bar' + (i === chartData.length - 1 ? ' active' : '');
+  bar.style.height = h + '%';
+  chartContainer.appendChild(bar);
+});
+
+/* ---- PRICING TOGGLE ---- */
+let isAnnual = false;
+const prices = { starter: 450, pro: 900, enterprise: 1800 };
+
+function togglePricing() {
+  isAnnual = !isAnnual;
+  document.getElementById('pricingToggle').classList.toggle('active', isAnnual);
+  const vals = document.querySelectorAll('.price-val');
+  const factor = isAnnual ? 0.8 : 1;
+  const baseArr = [450, 900, 1800];
+  vals.forEach((el, i) => {
+    el.textContent = Math.round(baseArr[i] * factor);
+  });
+}
+
+/* ---- CALCULATOR ---- */
+function calcPrice() {
+  const videos = parseInt(document.getElementById('calcVideos').value);
+  const accounts = parseInt(document.getElementById('calcAccounts').value);
+  const duration = parseInt(document.getElementById('calcDuration').value);
+  const extra = parseInt(document.getElementById('calcExtra').value);
+  const platforms = document.querySelectorAll('.platform-chip.selected').length;
+
+  let base = 200;
+  const videoPrice = videos === 999 ? 400 : videos * 15;
+  const accountPrice = accounts * 60;
+  const platformPrice = platforms * 20;
+  const durationDiscount = duration >= 12 ? 0.8 : duration >= 6 ? 0.9 : duration >= 3 ? 0.95 : 1;
+
+  let total = (base + videoPrice + accountPrice + platformPrice + extra) * durationDiscount;
+  total = Math.max(450, Math.round(total));
+
+  document.getElementById('calcResult').textContent = total.toLocaleString();
+}
+
+function toggleChip(btn) {
+  btn.classList.toggle('selected');
+  calcPrice();
+}
+
+// Init calc
+calcPrice();
+
+/* ---- ORDER FORM ---- */
+function submitOrder() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  const service = document.getElementById('fservice').value;
+
+  if (!name || !email || !service) {
+    alert('يرجى ملء الحقول المطلوبة: الاسم، البريد الإلكتروني، والخدمة');
+    return;
+  }
+
+  // In production: send to your backend API
+  // fetch('/api/orders', { method:'POST', body: JSON.stringify({name,email,phone,service}) })
+
+  document.getElementById('orderForm').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+  window.scrollTo({ top: document.getElementById('order').offsetTop, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
